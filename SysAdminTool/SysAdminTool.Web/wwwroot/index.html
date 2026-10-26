@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SysAdmin Monitor</title>
+<style>
+  :root {
+    --bg: #0f1419; --panel: #171d25; --border: #263040; --text: #e6edf3; --muted: #8b98a8;
+    --good: #3fb950; --warn: #d29922; --crit: #f85149; --accent: #4493f8;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text);
+         font: 14px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  header { display: flex; align-items: center; gap: 12px; padding: 14px 24px;
+           border-bottom: 1px solid var(--border); background: var(--panel); position: sticky; top: 0; z-index: 5; }
+  header h1 { font-size: 17px; margin: 0; }
+  .badge { font-size: 11px; padding: 2px 8px; border-radius: 999px; border: 1px solid var(--border); color: var(--muted); }
+  #updated { margin-left: auto; color: var(--muted); font-size: 12px; }
+  #updated.err { color: var(--crit); }
+  main { max-width: 1200px; margin: 0 auto; padding: 20px 24px 48px; }
+  h2 { font-size: 13px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin: 28px 0 10px; }
+  .summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; }
+  .card { background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; }
+  .stat b { display: block; font-size: 28px; line-height: 1.2; }
+  .stat span { color: var(--muted); font-size: 12px; }
+  .stat.bad b { color: var(--crit); }
+  .stat.good b { color: var(--good); }
+  .servers { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
+  .server { cursor: pointer; transition: border-color .15s; }
+  .server:hover { border-color: var(--muted); }
+  .server.selected { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent) inset; }
+  .server.down { opacity: .6; }
+  .row { display: flex; align-items: center; gap: 8px; }
+  .dot { width: 9px; height: 9px; border-radius: 50%; flex: none; }
+  .dot.good { background: var(--good); } .dot.bad { background: var(--crit); }
+  .tag { margin-left: auto; font-size: 11px; color: var(--muted); border: 1px solid var(--border); border-radius: 6px; padding: 0 6px; }
+  .muted { color: var(--muted); font-size: 12px; margin: 2px 0 8px; }
+  .metric { display: grid; grid-template-columns: 34px 1fr 38px; align-items: center; gap: 8px; font-size: 12px; margin-top: 4px; }
+  .metric b { text-align: right; font-weight: 600; }
+  .bar { height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; }
+  .bar i { display: block; height: 100%; border-radius: 3px; }
+  .bar i.ok { background: var(--good); } .bar i.warn { background: var(--warn); } .bar i.crit { background: var(--crit); }
+  .charts { display: grid; grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); gap: 12px; }
+  .chart-title { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); margin-bottom: 6px; }
+  .chart-title b { color: var(--text); }
+  canvas { width: 100%; height: 150px; display: block; }
+  .two { display: grid; grid-template-columns: 3fr 2fr; gap: 12px; }
+  @media (max-width: 900px) { .two { grid-template-columns: 1fr; } .charts { grid-template-columns: 1fr; } }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { text-align: left; color: var(--muted); font-weight: 500; font-size: 12px; padding: 4px 8px 8px 0; }
+  td { padding: 6px 8px 6px 0; border-top: 1px solid var(--border); vertical-align: top; }
+  .pill { font-size: 11px; padding: 1px 8px; border-radius: 999px; }
+  .pill.active { background: rgba(248,81,73,.15); color: var(--crit); }
+  .pill.resolved { background: rgba(63,185,80,.15); color: var(--good); }
+  .feed { max-height: 330px; overflow: auto; }
+  .feed div { padding: 6px 0; border-top: 1px solid var(--border); font-size: 13px; }
+  .feed div:first-child { border-top: 0; }
+  .feed time { color: var(--muted); font-size: 12px; margin-right: 6px; }
+  .empty { color: var(--muted); padding: 8px 0; }
+</style>
+</head>
+<body>
+<header>
+  <h1>SysAdmin Monitor</h1>
+  <span class="badge">Read-only</span>
+  <span id="updated">Connecting…</span>
+</header>
+
+<main>
+  <div class="summary" id="summary"></div>
+
+  <h2>Servers</h2>
+  <div class="servers" id="servers"></div>
+
+  <h2 id="chartsHeading">Resource usage</h2>
+  <div class="charts">
+    <div class="card"><div class="chart-title"><span>CPU %</span><b id="vCpu"></b></div><canvas id="cCpu"></canvas></div>
+    <div class="card"><div class="chart-title"><span>RAM %</span><b id="vRam"></b></div><canvas id="cRam"></canvas></div>
+    <div class="card"><div class="chart-title"><span>Disk %</span><b id="vDisk"></b></div><canvas id="cDisk"></canvas></div>
+    <div class="card"><div class="chart-title"><span>Network (kbps)</span><b id="vNet"></b></div><canvas id="cNet"></canvas></div>
+  </div>
+
+  <div class="two">
+    <div>
+      <h2>Alerts</h2>
+      <div class="card" id="alerts"></div>
+    </div>
+    <div>
+      <h2>Activity history</h2>
+      <div class="card feed" id="activity"></div>
+    </div>
+  </div>
+</main>
+
+<script>
+const $ = s => document.querySelector(s);
+const state = { selected: null };
+
+const esc = s => String(s ?? '').replace(/[&<>"']/g,
+  c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const fmtTime = iso => new Date(iso).toLocaleTimeString();
+const level = v => (v >= 90 ? 'crit' : v >= 75 ? 'warn' : 'ok');
+
+async function get(url) {
+  const r = await fetch(url);
+  if (!r.ok) throw new Error(url + ' -> ' + r.status);
+  return r.json();
+}
+
+function bar(label, v) {
+  return `<div class="metric"><span>${label}</span>
+    <div class="bar"><i class="${level(v)}" style="width:${Math.min(v, 100)}%"></i></div>
+    <b>${v.toFixed(0)}%</b></div>`;
+}
+
+function renderSummary(servers, alerts) {
+  const up = servers.filter(s => s.status === 'up').length;
+  const down = servers.length - up;
+  const active = alerts.filter(a => !a.resolvedUtc).length;
+  $('#summary').innerHTML = `
+    <div class="card stat good"><b>${up}</b><span>Servers online</span></div>
+    <div class="card stat ${down ? 'bad' : ''}"><b>${down}</b><span>Servers offline</span></div>
+    <div class="card stat ${active ? 'bad' : ''}"><b>${active}</b><span>Active alerts</span></div>
+    <div class="card stat"><b>${servers.length}</b><span>Total servers</span></div>`;
+}
+
+function renderServers(servers) {
+  if (!servers.length) { $('#servers').innerHTML = '<div class="empty">No servers yet.</div>'; return; }
+  $('#servers').innerHTML = servers.map(s => {
+    const l = s.latest, down = s.status === 'down';
+    return `<div class="card server ${s.id === state.selected ? 'selected' : ''} ${down ? 'down' : ''}" data-id="${esc(s.id)}">
+      <div class="row"><span class="dot ${down ? 'bad' : 'good'}"></span><b>${esc(s.name)}</b><span class="tag">${esc(s.group)}</span></div>
+      <div class="muted">${esc(s.host)} · ${down ? 'offline' : 'online'}${s.lastSeenUtc ? ' · last seen ' + fmtTime(s.lastSeenUtc) : ''}</div>
+      ${l ? bar('CPU', l.cpu) + bar('RAM', l.ram) + bar('Disk', l.disk) : '<div class="muted">No data yet</div>'}
+    </div>`;
+  }).join('');
+}
+
+function renderAlerts(alerts) {
+  if (!alerts.length) { $('#alerts').innerHTML = '<div class="empty">No alerts. All good.</div>'; return; }
+  $('#alerts').innerHTML = `<table><thead><tr><th>Time</th><th>Server</th><th>Alert</th><th>Status</th></tr></thead><tbody>` +
+    alerts.slice(0, 15).map(a => `<tr>
+      <td>${fmtTime(a.openedUtc)}</td><td>${esc(a.serverName)}</td><td>${esc(a.message)}</td>
+      <td><span class="pill ${a.resolvedUtc ? 'resolved' : 'active'}">${a.resolvedUtc ? 'resolved' : 'active'}</span></td></tr>`).join('') +
+    `</tbody></table>`;
+}
+
+function renderActivity(items) {
+  if (!items.length) { $('#activity').innerHTML = '<div class="empty">No activity yet.</div>'; return; }
+  $('#activity').innerHTML = items.map(a =>
+    `<div><time>${fmtTime(a.timeUtc)}</time>${esc(a.action)}</div>`).join('');
+}
+
+function drawChart(canvas, values, color, fixedMax) {
+  const dpr = window.devicePixelRatio || 1;
+  const w = canvas.clientWidth, h = canvas.clientHeight;
+  canvas.width = w * dpr; canvas.height = h * dpr;
+  const ctx = canvas.getContext('2d');
+  ctx.scale(dpr, dpr);
+  ctx.clearRect(0, 0, w, h);
+
+  const pad = { l: 38, r: 8, t: 8, b: 8 };
+  const max = fixedMax || Math.max(1000, ...values) * 1.1;
+  const iw = w - pad.l - pad.r, ih = h - pad.t - pad.b;
+
+  ctx.font = '11px system-ui, sans-serif';
+  ctx.textAlign = 'right';
+  ctx.textBaseline = 'middle';
+  for (let i = 0; i <= 4; i++) {
+    const y = pad.t + ih - (ih * i / 4);
+    ctx.strokeStyle = '#263040';
+    ctx.beginPath(); ctx.moveTo(pad.l, y); ctx.lineTo(w - pad.r, y); ctx.stroke();
+    ctx.fillStyle = '#8b98a8';
+    ctx.fillText(Math.round(max * i / 4), pad.l - 6, y);
+  }
+
+  if (values.length < 2) {
+    ctx.fillStyle = '#8b98a8'; ctx.textAlign = 'center';
+    ctx.fillText('Collecting data…', w / 2, h / 2);
+    return;
+  }
+
+  ctx.strokeStyle = color; ctx.lineWidth = 2; ctx.lineJoin = 'round';
+  ctx.beginPath();
+  values.forEach((v, i) => {
+    const x = pad.l + iw * i / (values.length - 1);
+    const y = pad.t + ih - ih * Math.min(v, max) / max;
+    i ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
+  });
+  ctx.stroke();
+}
+
+function renderCharts(history, server) {
+  $('#chartsHeading').textContent = server ? 'Resource usage — ' + server.name + ' (last 10 min)' : 'Resource usage';
+  const col = k => history.map(p => p[k]);
+  const last = k => (history.length ? history[history.length - 1][k] : null);
+  const set = (id, v, unit) => { $(id).textContent = v == null ? '' : v.toFixed(unit === 'kbps' ? 0 : 1) + (unit === '%' ? '%' : ' kbps'); };
+  set('#vCpu', last('cpu'), '%'); set('#vRam', last('ram'), '%');
+  set('#vDisk', last('disk'), '%'); set('#vNet', last('netKbps'), 'kbps');
+  drawChart($('#cCpu'), col('cpu'), '#4493f8', 100);
+  drawChart($('#cRam'), col('ram'), '#a371f7', 100);
+  drawChart($('#cDisk'), col('disk'), '#d29922', 100);
+  drawChart($('#cNet'), col('netKbps'), '#3fb950', 0);
+}
+
+$('#servers').addEventListener('click', e => {
+  const card = e.target.closest('[data-id]');
+  if (card) { state.selected = card.dataset.id; refresh(); }
+});
+
+async function refresh() {
+  try {
+    const [servers, alerts, activity] = await Promise.all([
+      get('/api/servers'), get('/api/alerts'), get('/api/activity?limit=30')
+    ]);
+    if (!state.selected || !servers.some(s => s.id === state.selected)) {
+      state.selected = servers.length ? servers[0].id : null;
+    }
+    renderSummary(servers, alerts);
+    renderServers(servers);
+    renderAlerts(alerts);
+    renderActivity(activity);
+
+    if (state.selected) {
+      const history = await get('/api/servers/' + encodeURIComponent(state.selected) + '/history?minutes=10');
+      renderCharts(history, servers.find(s => s.id === state.selected));
+    }
+    $('#updated').textContent = 'Updated ' + new Date().toLocaleTimeString();
+    $('#updated').classList.remove('err');
+  } catch (e) {
+    $('#updated').textContent = 'Connection lost — retrying…';
+    $('#updated').classList.add('err');
+  }
+}
+
+refresh();
+setInterval(refresh, 3000);
+window.addEventListener('resize', refresh);
+</script>
+</body>
+</html>
