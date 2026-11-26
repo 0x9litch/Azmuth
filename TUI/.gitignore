@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+
+# Azmuth runtime data — never commit (lives in ~/.local / ~/.config anyway)
+*.db
+*.db-wal
+*.db-shm
+api-token
+azmuth-exports/
+
+# SSH keys, just in case one is copied into the project folder
+id_*
+!id_*.pub
+*.pem
+*.key
+
+# editors / OS
+.vscode/
+.idea/
+*.swp
+.DS_Store
+
+# secrets for the web/n8n side if it is added to this repo later
+.env
+appsettings.*.local.json

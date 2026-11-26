@@ -1,0 +1,37 @@
+{
+  "now": 1795648614.5537581,
+  "incidents": [
+    {
+      "id": "INC-0002",
+      "server": "web-srv",
+      "severity": "error",
+      "status": "open",
+      "cleared": false,
+      "category": "services",
+      "title": "broken.service failed",
+      "root_cause": "broken.service is in the failed state.",
+      "confidence": "low",
+      "created_at": "2026-11-25T23:16:54Z",
+      "first_seen": "2026-11-25T23:16:54Z",
+      "last_seen": "2026-11-25T23:16:54Z",
+      "event_count": 1,
+      "recurring": 0
+    },
+    {
+      "id": "INC-0001",
+      "server": "web-srv",
+      "severity": "error",
+      "status": "open",
+      "cleared": false,
+      "category": "memory",
+      "title": "OOM killer terminated java",
+      "root_cause": "Memory exhaustion: the kernel's OOM killer terminated java (pid 1234).",
+      "confidence": "high",
+      "created_at": "2026-11-25T23:16:54Z",
+      "first_seen": "2026-11-25T23:16:54Z",
+      "last_seen": "2026-11-25T23:16:54Z",
+      "event_count": 1,
+      "recurring": 0
+    }
+  ]
+}

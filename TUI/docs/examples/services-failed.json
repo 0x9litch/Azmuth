@@ -1,0 +1,13 @@
+{
+  "server": "web-srv",
+  "collected_at": "2026-11-25T23:16:54Z",
+  "services": [
+    {
+      "name": "broken.service",
+      "load": "loaded",
+      "active": "failed",
+      "sub": "failed",
+      "description": "Broken demo"
+    }
+  ]
+}

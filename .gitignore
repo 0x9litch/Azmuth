@@ -1,0 +1,96 @@
+# ---- Python ---------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+.eggs/
+build/
+dist/
+pip-wheel-metadata/
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Tooling caches
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.pytype/
+.tox/
+.nox/
+.coverage
+.coverage.*
+htmlcov/
+.hypothesis/
+.ipynb_checkpoints/
+
+# ---- Secrets & credentials -------------------------------------------------
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+id_rsa*
+id_ed25519*
+id_ecdsa*
+*_ed25519
+*_ed25519.pub
+*_rsa
+*_rsa.pub
+known_hosts
+authorized_keys
+secrets.*
+credentials.*
+
+# ---- Local data (Azmuth stores its DB in ~/.local/share/azmuth) ------------
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+*.sqlite
+*.sqlite3
+*.log
+logs/
+
+# ---- Web (if/when web/ uses a JS toolchain) --------------------------------
+node_modules/
+.next/
+.nuxt/
+.svelte-kit/
+.parcel-cache/
+.vite/
+.turbo/
+.cache/
+coverage/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ---- .NET (web/) -----------------------------------------------------------
+bin/
+obj/
+.vs/
+*.user
+*.suo
+appsettings.*.local.json
+TestResults/
+
+# ---- Editors / OS ----------------------------------------------------------
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+.directory
+
+# ---- Claude Code local settings --------------------------------------------
+.claude/settings.local.json

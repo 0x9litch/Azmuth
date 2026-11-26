@@ -1,0 +1,38 @@
+{
+  "servers": [
+    {
+      "name": "db-srv",
+      "host": "127.0.0.1",
+      "port": 2299,
+      "connected": true,
+      "ping": null,
+      "active_incidents": 0,
+      "worst_severity": null,
+      "last_collected": {
+        "services": "2026-11-25T23:16:54Z",
+        "processes": "2026-11-25T23:16:54Z",
+        "updates": "2026-11-25T23:16:54Z",
+        "logs": "2026-11-25T23:16:54Z",
+        "metrics": "2026-11-25T23:16:54Z"
+      },
+      "collection_errors": {}
+    },
+    {
+      "name": "web-srv",
+      "host": "127.0.0.1",
+      "port": 2299,
+      "connected": true,
+      "ping": null,
+      "active_incidents": 2,
+      "worst_severity": "error",
+      "last_collected": {
+        "services": "2026-11-25T23:16:54Z",
+        "updates": "2026-11-25T23:16:54Z",
+        "processes": "2026-11-25T23:16:54Z",
+        "logs": "2026-11-25T23:16:54Z",
+        "metrics": "2026-11-25T23:16:54Z"
+      },
+      "collection_errors": {}
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "name": "web-srv",
+  "host": "127.0.0.1",
+  "port": 2299,
+  "connected": true,
+  "ping": null,
+  "active_incidents": 2,
+  "worst_severity": "error",
+  "last_collected": {
+    "services": "2026-11-25T23:16:54Z",
+    "updates": "2026-11-25T23:16:54Z",
+    "processes": "2026-11-25T23:16:54Z",
+    "logs": "2026-11-25T23:16:54Z",
+    "metrics": "2026-11-25T23:16:54Z"
+  },
+  "collection_errors": {},
+  "metrics": {
+    "collected_at": "2026-11-25T23:16:54Z",
+    "cpu_percent": 24.0,
+    "memory": {
+      "percent": 5.8,
+      "used_bytes": 489340928,
+      "total_bytes": 8413396992
+    },
+    "disk_root": {
+      "percent": 29.0,
+      "used_bytes": 12865843200,
+      "total_bytes": 270553174016
+    },
+    "load": [
+      0.36,
+      0.3,
+      0.13
+    ],
+    "cpus": 2,
+    "uptime_seconds": 404,
+    "hostname": "vm",
+    "os": "Ubuntu 24.04.5 LTS",
+    "kernel": "6.18.44-fc-v880"
+  },
+  "failed_services": [
+    "broken.service"
+  ],
+  "journal_access": "full"
+}

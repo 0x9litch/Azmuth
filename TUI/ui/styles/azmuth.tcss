@@ -1,0 +1,126 @@
+/* Azmuth stylesheet.
+   Uses ONLY Textual theme variables, so the theme picker (Ctrl+T)
+   restyles everything: sidebar, tabs, tables, dialogs, status lines.
+   The default look comes from AZMUTH_THEME in theme.py.            */
+
+Screen { background: $background; color: $foreground; }
+
+/* ---------- chrome ---------- */
+#topbar { height: 1; background: $primary; color: $background; text-style: bold; padding: 0 1; }
+#status { height: 1; margin-bottom: 1; }
+KeyHints { height: auto; max-height: 5; padding: 0 1; color: $foreground-muted; border-top: solid $primary 40%; }
+
+/* ---------- sidebar ---------- */
+ServerList { width: 30; border: solid $primary 40%; padding: 0 1; background: $background; }
+ServerList .brand { text-style: bold; margin-bottom: 1; color: $primary; }
+ServerList OptionList { height: 1fr; background: $background; border: none; }
+ServerList #selection { height: auto; color: $foreground-muted; }
+OptionList > .option-list--option-highlighted { background: $primary 30%; color: $foreground; text-style: bold; }
+
+/* ---------- tabs ---------- */
+#main { padding: 0 1; }
+TabbedContent { height: 1fr; }
+Tabs { background: $background; height: 1; }
+Tab { background: $background; color: $foreground-muted; padding: 0 2; }
+Tab.-active { background: $primary; color: $background; text-style: bold; }
+TabPane { padding: 1 0 0 0; }
+BaseTab { height: 1fr; }
+.section { color: $foreground-muted; text-style: bold; margin: 1 0 0 0; height: 1; }
+.subline { height: 1; margin-bottom: 1; }
+
+/* ---------- dashboard ---------- */
+#dash-scroll { padding: 0 0 0 0; }
+#dash-tiles { height: 3; margin-bottom: 0; }
+StatTile {
+    text-wrap: nowrap; text-overflow: ellipsis;
+    width: 1fr; height: 3; padding: 0 1; margin-right: 1;
+    border: round $primary 30%; border-title-color: $foreground-muted; border-title-style: bold;
+    content-align: center middle; text-align: center;
+}
+#tile-inc { margin-right: 0; }
+StatTile.tile-ok    { border: round $primary 70%; }
+StatTile.tile-warn  { border: round $warning; }
+StatTile.tile-bad   { border: round $error; }
+StatTile.tile-muted { border: round $primary 25%; }
+
+#dash-top { height: 8; }
+#overview {
+    width: 2fr; height: 100%; margin-right: 1;
+    border-title-color: $foreground-muted; border-title-style: bold;
+}
+#alerts {
+    width: 1fr; min-width: 32; height: 100%; padding: 0 1;
+    text-wrap: nowrap; text-overflow: ellipsis;
+    border: round $primary 40%; border-title-color: $foreground-muted; border-title-style: bold;
+}
+#alerts.has-alerts { border: round $warning; border-title-color: $warning; }
+
+#dash-server {
+    height: 1fr; min-height: 14; padding: 0 1;
+    border: round $primary 30%; border-title-color: $foreground; border-title-style: bold;
+    border-subtitle-color: $foreground-muted;
+}
+#dash-server.connected { border: round $primary 80%; }
+#dash-info { height: 1; margin-bottom: 0; }
+#dash-metrics { height: 4; }
+MetricCard {
+    text-wrap: nowrap; text-overflow: clip;
+    width: 1fr; height: 4; padding: 0 1; margin-right: 1;
+    border: round $primary 40%; border-title-color: $foreground-muted;
+}
+#card-load { margin-right: 0; }
+
+/* ---------- tables, logs, inputs ---------- */
+DataTable { background: $background; border: solid $primary 40%; color: $foreground; }
+DataTable:focus { border: solid $primary; }
+DataTable > .datatable--header { background: $background; color: $foreground-muted; text-style: bold; }
+DataTable > .datatable--cursor { background: $primary 50%; color: $foreground; text-style: bold; }
+DataTable:focus > .datatable--cursor { background: $primary; color: $background; }
+RichLog { background: $background; border: solid $primary 40%; padding: 0 1; }
+RichLog:focus { border: solid $primary; }
+Input { border: none; height: 1; padding: 0 1; background: $primary 12%; color: $foreground; }
+Input:focus { background: $primary 28%; }
+SearchBar { margin-bottom: 1; }
+
+/* ---------- terminal ---------- */
+#prompt-row { height: 1; }
+#prompt-sign { width: auto; text-style: bold; padding-right: 1; color: $primary; }
+#cmd-log { height: 1fr; }
+
+/* ---------- logs & diagnostics ---------- */
+#diag-log { height: 12; }
+#log-log { height: 1fr; }
+
+/* ---------- dialogs ---------- */
+ModalScreen { background: $background 70%; align: center middle; }
+.dialog { width: 84; height: auto; max-height: 90%; border: solid $primary; padding: 1 2; background: $background; }
+.dialog .title { color: $primary; text-style: bold; margin-bottom: 1; }
+.dialog .keys { color: $foreground-muted; margin-top: 1; }
+.dialog .note { color: $foreground-muted; }
+.dialog .warn { color: $warning; height: auto; }
+.dialog .error { color: $error; height: auto; }
+.dialog .ok { color: $success; }
+.dialog .row { height: 1; margin-bottom: 1; }
+.dialog .field-label { width: 22; color: $foreground-muted; }
+.dialog .mono { background: $primary 12%; padding: 0 1; height: auto; }
+.dialog OptionList { height: auto; max-height: 8; border: solid $primary 40%; background: $background; }
+.dialog OptionList:focus { border: solid $primary; }
+.dialog RadioSet { border: solid $primary 40%; background: $background; height: auto; }
+.dialog RadioSet:focus-within { border: solid $primary; }
+#help-body { height: auto; max-height: 30; }
+
+/* dashboard trend */
+#dash-trend { height: 1fr; min-height: 5; margin-top: 1; }
+.trend { width: 1fr; height: 100%; padding: 0 1 0 0; }
+.trend-label { height: 1; color: $foreground-muted; }
+Sparkline { height: 3; }
+.trend TrendChart { height: 1fr; min-height: 3; }
+Sparkline > .sparkline--max-color { color: $warning; }
+Sparkline > .sparkline--min-color { color: $primary; }
+
+/* processes / incidents */
+#proc-table, #inc-table { height: 1fr; }
+#inc-detail-body { padding: 0 1; }
+#inc-detail { width: 90%; height: 90%; border: thick $primary; background: $surface; padding: 0 1; }
+#inc-detail-title { text-style: bold; height: auto; }
+#inc-detail-hints { color: $foreground-muted; height: 1; }

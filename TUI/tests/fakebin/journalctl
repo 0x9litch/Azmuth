@@ -1,0 +1,11 @@
+#!/bin/bash
+# Fake journal: 4 entries with cursors; --after-cursor returns nothing new
+# (like the real journal when no new lines were written).
+case "$*" in *--after-cursor*) exit 0;; esac
+now=$(date +%s)000000
+cat <<J
+{"__CURSOR":"c1","__REALTIME_TIMESTAMP":"$now","PRIORITY":"6","SYSLOG_IDENTIFIER":"systemd","MESSAGE":"Started Session 1 of user root."}
+{"__CURSOR":"c2","__REALTIME_TIMESTAMP":"$now","PRIORITY":"3","SYSLOG_IDENTIFIER":"kernel","MESSAGE":"Out of memory: Killed process 1234 (java)"}
+{"__CURSOR":"c3","__REALTIME_TIMESTAMP":"$now","PRIORITY":"4","SYSLOG_IDENTIFIER":"sshd","MESSAGE":"[weird] markup [/b] text"}
+{"__CURSOR":"c4","__REALTIME_TIMESTAMP":"$now","PRIORITY":"3","SYSLOG_IDENTIFIER":"app","MESSAGE":[104,105]}
+J

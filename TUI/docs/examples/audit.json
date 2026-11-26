@@ -1,0 +1,85 @@
+{
+  "audit": [
+    {
+      "id": 9,
+      "time": "2026-11-25T23:16:54Z",
+      "user": "root",
+      "server": "-",
+      "action": "api_auth_failed",
+      "status": "failed",
+      "details": "GET /api/v1/servers from 127.0.0.1"
+    },
+    {
+      "id": 8,
+      "time": "2026-11-25T23:16:54Z",
+      "user": "root",
+      "server": "-",
+      "action": "api_auth_failed",
+      "status": "failed",
+      "details": "GET /api/v1/servers from 127.0.0.1"
+    },
+    {
+      "id": 7,
+      "time": "2026-11-25T23:16:54Z",
+      "user": "root",
+      "server": "-",
+      "action": "api_start",
+      "status": "success",
+      "details": "127.0.0.1:18765"
+    },
+    {
+      "id": 6,
+      "time": "2026-11-25T23:16:54Z",
+      "user": "root",
+      "server": "web-srv",
+      "action": "incident_new",
+      "status": "INFO",
+      "details": "INC-0001, INC-0002"
+    },
+    {
+      "id": 5,
+      "time": "2026-11-25T23:16:53Z",
+      "user": "root",
+      "server": "db-srv",
+      "action": "connect",
+      "status": "success",
+      "details": "glitch@127.0.0.1:2299"
+    },
+    {
+      "id": 4,
+      "time": "2026-11-25T23:16:53Z",
+      "user": "root",
+      "server": "web-srv",
+      "action": "connect",
+      "status": "success",
+      "details": "glitch@127.0.0.1:2299"
+    },
+    {
+      "id": 3,
+      "time": "2026-11-25T23:16:53Z",
+      "user": "root",
+      "server": "web-srv",
+      "action": "demo",
+      "status": "success",
+      "details": "mysql -u root -p[REDACTED] dump; token=[REDACTED]"
+    },
+    {
+      "id": 2,
+      "time": "2026-11-25T23:16:53Z",
+      "user": "root",
+      "server": "db-srv",
+      "action": "add_server",
+      "status": "success",
+      "details": "glitch@127.0.0.1:2299"
+    },
+    {
+      "id": 1,
+      "time": "2026-11-25T23:16:53Z",
+      "user": "root",
+      "server": "web-srv",
+      "action": "add_server",
+      "status": "success",
+      "details": "glitch@127.0.0.1:2299"
+    }
+  ]
+}

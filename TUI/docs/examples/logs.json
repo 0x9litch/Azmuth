@@ -1,0 +1,25 @@
+{
+  "server": "web-srv",
+  "journal_access": "full",
+  "count": 2,
+  "entries": [
+    {
+      "ts": "2026-11-25T23:16:54Z",
+      "epoch": 1795648614.0,
+      "level": "ERROR",
+      "source": "kernel",
+      "unit": "",
+      "pid": null,
+      "message": "Out of memory: Killed process 1234 (java)"
+    },
+    {
+      "ts": "2026-11-25T23:16:54Z",
+      "epoch": 1795648614.0,
+      "level": "ERROR",
+      "source": "app",
+      "unit": "",
+      "pid": null,
+      "message": "hi"
+    }
+  ]
+}

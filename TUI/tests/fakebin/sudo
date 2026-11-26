@@ -1,0 +1,16 @@
+#!/bin/bash
+mode=""
+while [ $# -gt 0 ]; do
+  case "$1" in
+    -n) mode=n; shift;;
+    -S) mode=S; shift;;
+    -p) shift 2;;
+    --) shift; break;;
+    *) break;;
+  esac
+done
+if [ "$mode" = n ]; then echo "sudo: a password is required" >&2; exit 1; fi
+IFS= read -r pw
+if [ "$pw" != "secret" ]; then echo "Sorry, try again." >&2; echo "sudo: 1 incorrect password attempt" >&2; exit 1; fi
+export SUDO_UID="$(id -u)" SUDO_GID="$(id -g)" SUDO_USER="$(id -un)"
+exec "$@"

@@ -1,0 +1,42 @@
+{
+  "id": "INC-0001",
+  "server": "web-srv",
+  "category": "memory",
+  "severity": "error",
+  "status": "open",
+  "title": "OOM killer terminated java",
+  "root_cause": "Memory exhaustion: the kernel's OOM killer terminated java (pid 1234).",
+  "confidence": "high",
+  "confidence_reason": "the kernel log names the killed process",
+  "impact": "A process was killed to free memory.",
+  "affected": [],
+  "checks": [
+    {
+      "title": "Memory right now",
+      "command": "free -h"
+    },
+    {
+      "title": "Biggest memory users",
+      "command": "ps aux --sort=-%mem | head -n 15"
+    },
+    {
+      "title": "Kernel OOM report",
+      "command": "journalctl -k --since -2h | grep -iA20 'invoked oom-killer'"
+    }
+  ],
+  "first_seen": "2026-11-25T23:16:54Z",
+  "last_seen": "2026-11-25T23:16:54Z",
+  "event_count": 1,
+  "recurring": 0,
+  "previous_id": null,
+  "cleared": false,
+  "evidence": [
+    {
+      "ts": "2026-11-25T23:16:54Z",
+      "source": "kernel",
+      "unit": "",
+      "role": "cause",
+      "message": "Out of memory: Killed process 1234 (java)"
+    }
+  ]
+}

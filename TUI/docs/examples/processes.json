@@ -1,0 +1,67 @@
+{
+  "server": "db-srv",
+  "collected_at": "2026-11-25T23:00:05Z",
+  "total": 132,
+  "processes": [
+    {
+      "pid": 1123,
+      "ppid": 1,
+      "user": "mysql",
+      "cpu": 23.4,
+      "mem": 11.8,
+      "rss_bytes": 958525440,
+      "elapsed_seconds": 86012,
+      "state": "Ssl",
+      "name": "mysqld",
+      "command": "/usr/sbin/mysqld"
+    },
+    {
+      "pid": 2210,
+      "ppid": 2204,
+      "user": "www-data",
+      "cpu": 4.1,
+      "mem": 1.2,
+      "rss_bytes": 98304000,
+      "elapsed_seconds": 3540,
+      "state": "S",
+      "name": "php-fpm8.3",
+      "command": "php-fpm: pool www"
+    },
+    {
+      "pid": 2204,
+      "ppid": 1,
+      "user": "root",
+      "cpu": 0.3,
+      "mem": 0.6,
+      "rss_bytes": 48234496,
+      "elapsed_seconds": 86010,
+      "state": "Ss",
+      "name": "php-fpm8.3",
+      "command": "php-fpm: master process (/etc/php/8.3/fpm/php-fpm.conf)"
+    },
+    {
+      "pid": 987,
+      "ppid": 1,
+      "user": "root",
+      "cpu": 0.2,
+      "mem": 0.3,
+      "rss_bytes": 24117248,
+      "elapsed_seconds": 86015,
+      "state": "Ss",
+      "name": "nginx",
+      "command": "nginx: master process /usr/sbin/nginx -g daemon on; master_process on;"
+    },
+    {
+      "pid": 3301,
+      "ppid": 3290,
+      "user": "glitch",
+      "cpu": 0.1,
+      "mem": 0.1,
+      "rss_bytes": 8650752,
+      "elapsed_seconds": 120,
+      "state": "S",
+      "name": "backup.sh",
+      "command": "/bin/bash /opt/backup.sh --db-password=[REDACTED]"
+    }
+  ]
+}

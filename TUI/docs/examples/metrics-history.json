@@ -1,0 +1,18 @@
+{
+  "server": "web-srv",
+  "minutes": 10,
+  "resolution_seconds": null,
+  "samples": [
+    {
+      "ts": "2026-11-25T23:16:54Z",
+      "cpu": 24.0,
+      "mem_percent": 5.8,
+      "disk_percent": 29.0,
+      "load1": 0.4,
+      "load5": 0.3,
+      "load15": 0.1,
+      "mem_used": 489340928,
+      "mem_total": 8413396992
+    }
+  ]
+}

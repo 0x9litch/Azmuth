@@ -1,0 +1,27 @@
+{
+  "server": "web-srv",
+  "metrics": {
+    "collected_at": "2026-11-25T23:16:54Z",
+    "cpu_percent": 24.0,
+    "memory": {
+      "percent": 5.8,
+      "used_bytes": 489340928,
+      "total_bytes": 8413396992
+    },
+    "disk_root": {
+      "percent": 29.0,
+      "used_bytes": 12865843200,
+      "total_bytes": 270553174016
+    },
+    "load": [
+      0.36,
+      0.3,
+      0.13
+    ],
+    "cpus": 2,
+    "uptime_seconds": 404,
+    "hostname": "vm",
+    "os": "Ubuntu 24.04.5 LTS",
+    "kernel": "6.18.44-fc-v880"
+  }
+}

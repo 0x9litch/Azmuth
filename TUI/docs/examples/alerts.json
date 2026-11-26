@@ -1,0 +1,16 @@
+{
+  "alerts": [
+    {
+      "server": "db-srv",
+      "severity": "error",
+      "category": "services",
+      "title": "broken.service failed"
+    },
+    {
+      "server": "web-srv",
+      "severity": "error",
+      "category": "services",
+      "title": "broken.service failed"
+    }
+  ]
+}

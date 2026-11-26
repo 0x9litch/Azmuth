@@ -1,0 +1,6 @@
+#!/bin/bash
+case "$*" in
+  *state=failed*) echo "broken.service loaded failed failed Broken demo";;
+  list-units*) printf '%s\n' "ssh.service loaded active running OpenBSD Secure Shell server" "nginx.service loaded active running A high performance web server" "broken.service loaded failed failed Broken demo" "cron.service loaded active running Regular background program";;
+  *) echo "systemctl $*" >> /tmp/azt-systemctl.log;;
+esac
